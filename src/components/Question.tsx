@@ -3,14 +3,16 @@ import { option } from "./Option";
 import { useParams, useNavigate } from "react-router";
 
 const Question = () => {
-  const [selectedAns, setSelectedAns] = useState<string >();
+  const [selectedAns, setSelectedAns] = useState<string>();
+  const [clickOps, setClickOps] = useState<boolean>(false);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
   const questionId = Number(id);
-  console.log(selectedAns);
 
   const handleSelectedOption = (selectedOps: string) => {
+    console.log("handleSelectedOption", selectedOps);
     setSelectedAns(selectedOps);
   };
 
@@ -23,6 +25,9 @@ const Question = () => {
     }
   };
   console.log("option", option);
+  console.log("clickOps", clickOps);
+  console.log("selectedAns ", selectedAns);
+
   return (
     <main className="max-w-2xl mx-auto">
       {/* Title */}
@@ -36,25 +41,42 @@ const Question = () => {
       {/* Options */}
       <ul className="space-y-4">
         {option[questionId]?.options.map((item) => (
-          
+          //           <li
+          //   key={item}
+          //   onClick={() => handleSelectedOption(item)}
+          //   className={`${
+          //     Boolean(selectedAns)
+          //    && selectedAns === option[questionId].answer ?
+          //     "bg-green-400" : "bg-red-500"
+          //   } border rounded-lg p-4 cursor-pointer hover:bg-indigo-600 hover:text-white transition duration-200`}
+          // >
+          //   {item}
+          // </li>
+
           <li
-  key={item}
-  onClick={() => handleSelectedOption(item)}
-  className={`${
-    Boolean(selectedAns)
-   && selectedAns === option[questionId].answer ?
-    "bg-green-400" : "bg-red-500"
-  } border rounded-lg p-4 cursor-pointer hover:bg-indigo-600 hover:text-white transition duration-200`}
->
-  {item}
-</li>
-        ))} 
+            key={item}
+            onClick={() => {
+              handleSelectedOption(item);
+              console.log(
+                "option[questionId].answer",
+                option[questionId].answer,
+              );
+              console.log("item :====", item);
+              setClickOps(true);
+            }}
+            className={`${clickOps && Boolean(selectedAns) && selectedAns === option[questionId].answer && item === option[questionId].answer ? "bg-green-600" : "bg-gray-600"} 
+            border rounded-lg p-4 cursor-pointer 
+            bg-gray-600 hover:text-white  transition duration-200 `}
+          >
+            {item}
+          </li>
+        ))}
       </ul>
 
       {/* Next Button */}
       <button
         onClick={handleNext}
-        className="w-full mt-10 bg-cyan-100 hover:bg-cyan-200 rounded-xl py-3 text-lg font-semibold transition"
+        className="w-full mt-10 bg-cyan-100 hover:bg-cyan-500 rounded-xl py-3 text-lg font-semibold transition"
       >
         Next
       </button>
