@@ -9,7 +9,7 @@ function App() {
     <>
       <section>
         <div className="min-h-screen bg-violet-300 flex items-center justify-center p-6">
-      <div className="w-full max-w-5xl bg-gray-50 rounded-2xl shadow-lg p-10">
+      <div className="w-full max-w-5xl bg-pink-300 rounded-2xl shadow-lg p-10">
         <Routes>
           <Route path="/" element={<Navigate to="/quiz/0" replace />} />
           <Route path="/quiz/:id" element={<Question />} />

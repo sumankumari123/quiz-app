@@ -18,15 +18,14 @@ const Question = () => {
 
   const handleNext = () => {
     // setCount(count + 1);
+    setSelectedAns(undefined);
+
     if (questionId + 1 < option.length) {
       navigate(`/quiz/${questionId + 1}`);
     } else {
       navigate("/result");
     }
   };
-  console.log("option", option);
-  console.log("clickOps", clickOps);
-  console.log("selectedAns ", selectedAns);
 
   return (
     <main className="max-w-2xl mx-auto">
@@ -41,32 +40,31 @@ const Question = () => {
       {/* Options */}
       <ul className="space-y-4">
         {option[questionId]?.options.map((item) => (
-          //           <li
-          //   key={item}
-          //   onClick={() => handleSelectedOption(item)}
-          //   className={`${
-          //     Boolean(selectedAns)
-          //    && selectedAns === option[questionId].answer ?
-          //     "bg-green-400" : "bg-red-500"
-          //   } border rounded-lg p-4 cursor-pointer hover:bg-indigo-600 hover:text-white transition duration-200`}
-          // >
-          //   {item}
-          // </li>
-
           <li
             key={item}
             onClick={() => {
-              handleSelectedOption(item);
-              console.log(
-                "option[questionId].answer",
-                option[questionId].answer,
-              );
-              console.log("item :====", item);
+              if (!selectedAns) {
+                setSelectedAns(item);
+              }
               setClickOps(true);
+              setSelectedAns(item);
+              console.log(item, " ==== ", selectedAns);
+              // console.log("option", option);
+              // console.log("clickOps", clickOps);
+              // console.log("selectedAns ", selectedAns);
+              
             }}
-            className={`${clickOps && Boolean(selectedAns) && selectedAns === option[questionId].answer && item === option[questionId].answer ? "bg-green-600" : "bg-gray-600"} 
-            border rounded-lg p-4 cursor-pointer 
-            bg-gray-600 hover:text-white  transition duration-200 `}
+            className={`border rounded-lg p-4 cursor-pointer transition duration-200
+      ${
+        selectedAns && clickOps
+          ? selectedAns === option[questionId].answer &&
+            item === option[questionId].answer
+            ? "bg-green-600 text-white"
+            : item === selectedAns
+              ? "bg-red-600 text-white"
+              : "bg-white text-black"
+          : "bg-white text-black"
+      }`}
           >
             {item}
           </li>
